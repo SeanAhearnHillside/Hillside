@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portrait Hallway Carousel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: #1e1a16 url('https://i.imgur.com/3cE2qMy.jpg') repeat;
+      background-size: cover;
+      overflow-x: hidden;
+      color: #f3e6d3;
+    }
+    .hallway {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    .wainscoting {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 150px;
+      background: #3a2f27;
+      border-top: 4px solid #c2b280;
+    }
+    .carousel {
+      display: flex;
+      overflow: hidden;
+      width: 100%;
+      max-width: 1000px;
+      position: relative;
+    }
+    .frame {
+      flex: 0 0 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.6s ease-in-out;
+      position: relative;
+      text-align: center;
+    }
+    .frame img {
+      width: 300px;
+      height: 400px;
+      object-fit: cover;
+      border: 12px solid gold;
+      box-shadow: 0 0 80px rgba(255, 220, 150, 0.3);
+      background-color: #111;
+      transition: transform 0.3s ease;
+    }
+    .frame.active img {
+      box-shadow: 0 0 100px rgba(255, 240, 180, 0.8);
+      transform: scale(1.05);
+      z-index: 2;
+    }
+    .info {
+      margin-top: 20px;
+      max-width: 300px;
+      padding: 10px 15px;
+      background-color: rgba(20, 16, 12, 0.8);
+      border: 2px solid #7b6239;
+      border-radius: 10px;
+    }
+    .info h2 {
+      margin: 0;
+      font-size: 1.4em;
+      color: #ffebc4;
+    }
+    .info p {
+      margin: 0.5em 0 0;
+      font-size: 0.95em;
+      line-height: 1.4;
+      color: #d5c4a1;
+    }
+    .light {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center top, rgba(255, 230, 150, 0.4) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 50px;
+      color: #fff6dd;
+      cursor: pointer;
+      user-select: none;
+      z-index: 10;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+    }
+    .arrow:hover {
+      background: rgba(0, 0, 0, 0.6);
+    }
+    .arrow.left {
+      left: 10px;
+    }
+    .arrow.right {
+      right: 10px;
+    }
+    @media (max-width: 768px) {
+      .frame img {
+        width: 240px;
+        height: 320px;
+      }
+      .info {
+        max-width: 240px;
+      }
+      .arrow {
+        font-size: 40px;
+      }
+    }
+    @media (max-width: 480px) {
+      .frame img {
+        width: 180px;
+        height: 260px;
+        border: 8px solid gold;
+      }
+      .info {
+        padding: 8px;
+        max-width: 200px;
+      }
+      .info h2 {
+        font-size: 1.2em;
+      }
+      .info p {
+        font-size: 0.85em;
+      }
+      .arrow {
+        font-size: 36px;
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hallway">
+    <div class="arrow left" onclick="moveLeft()">‹</div>
+    <div class="carousel" id="carousel">
+      <div class="frame active">
+        <img src="https://via.placeholder.com/300x400.png?text=Staff+1" alt="Staff 1">
+        <div class="info"><h2>Alex Johnson</h2><p>Lead Archivist. Known for rare artifact knowledge and spooky anecdotes.</p></div>
+      </div>
+      <div class="frame">
+        <img src="https://via.placeholder.com/300x400.png?text=Staff+2" alt="Staff 2">
+        <div class="info"><h2>Maya Lin</h2><p>Curator of Lighting and Mood. Makes everything this dramatic.</p></div>
+      </div>
+      <div class="frame">
+        <img src="https://via.placeholder.com/300x400.png?text=Staff+3" alt="Staff 3">
+        <div class="info"><h2>Marcus Shaw</h2><p>Restoration Specialist. Keeps portraits pristine and timeless.</p></div>
+      </div>
+      <div class="frame">
+        <img src="https://via.placeholder.com/300x400.png?text=Staff+4" alt="Staff 4">
+        <div class="info"><h2>Elena Torres</h2><p>Director of Guest Experience. Hospitality and mystery master.</p></div>
+      </div>
+    </div>
+    <div class="arrow right" onclick="moveRight()">›</div>
+    <div class="wainscoting"></div>
+    <div class="light"></div>
+  </div>
+  <script>
+    const carousel = document.getElementById('carousel');
+    const frames = document.querySelectorAll('.frame');
+    let index = 0;
+    function updateCarousel() {
+      frames.forEach((frame, i) => {
+        frame.classList.remove('active');
+        frame.style.transform = `translateX(${(i - index) * 100}%)`;
+        if (i === index) frame.classList.add('active');
+      });
+    }
+    function moveLeft() {
+      index = (index - 1 + frames.length) % frames.length;
+      updateCarousel();
+    }
+    function moveRight() {
+      index = (index + 1) % frames.length;
+      updateCarousel();
+    }
+    updateCarousel();
+  </script>
+</body>
+</html>
