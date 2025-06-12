@@ -38,7 +38,6 @@
       position: relative;
     }
     .frame {
-      position: relative;
       flex: 0 0 100%;
       display: flex;
       flex-direction: column;
@@ -46,34 +45,34 @@
       justify-content: center;
       transition: transform 0.6s ease-in-out;
       text-align: center;
-      width: 300px;
-      height: 400px;
-      box-sizing: border-box;
+      position: relative;
     }
-    .frame img.portrait {
+    .portrait-wrapper {
+      position: relative;
       width: 300px;
       height: 400px;
+    }
+    .portrait-wrapper img.portrait {
+      width: 100%;
+      height: 100%;
       object-fit: contain;
-      display: block;
-      border: none;
-      box-shadow: none;
       background-color: #111;
-      transition: transform 0.3s ease;
+      display: block;
+      z-index: 1;
+      position: relative;
     }
-    .frame.active img.portrait {
-      box-shadow: 0 0 100px rgba(255, 240, 180, 0.8);
-      transform: scale(1.05);
-      z-index: 2;
-    }
-    .frame img.frame-overlay {
+    .portrait-wrapper img.frame-overlay {
       position: absolute;
       top: 0;
       left: 0;
-      width: 300px;
-      height: 400px;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
-      user-select: none;
-      z-index: 10;
+      z-index: 2;
+    }
+    .frame.active .portrait-wrapper img.portrait {
+      box-shadow: 0 0 100px rgba(255, 240, 180, 0.8);
+      transform: scale(1.05);
     }
     .info {
       margin-top: 20px;
@@ -82,7 +81,6 @@
       background-color: rgba(20, 16, 12, 0.8);
       border: 2px solid #7b6239;
       border-radius: 10px;
-      color: #d5c4a1;
     }
     .info h2 {
       margin: 0;
@@ -93,6 +91,7 @@
       margin: 0.5em 0 0;
       font-size: 0.95em;
       line-height: 1.4;
+      color: #d5c4a1;
     }
     .light {
       position: absolute;
@@ -110,7 +109,7 @@
       color: #fff6dd;
       cursor: pointer;
       user-select: none;
-      z-index: 20;
+      z-index: 10;
       padding: 10px;
       background: rgba(0, 0, 0, 0.4);
       border-radius: 10px;
@@ -125,12 +124,7 @@
       right: 10px;
     }
     @media (max-width: 768px) {
-      .frame {
-        width: 240px;
-        height: 320px;
-      }
-      .frame img.portrait,
-      .frame img.frame-overlay {
+      .portrait-wrapper {
         width: 240px;
         height: 320px;
       }
@@ -142,17 +136,9 @@
       }
     }
     @media (max-width: 480px) {
-      .frame {
+      .portrait-wrapper {
         width: 180px;
         height: 260px;
-      }
-      .frame img.portrait,
-      .frame img.frame-overlay {
-        width: 180px;
-        height: 260px;
-      }
-      .frame img.portrait {
-        border: none;
       }
       .info {
         padding: 8px;
@@ -176,32 +162,40 @@
     <div class="arrow left" onclick="moveLeft()">‹</div>
     <div class="carousel" id="carousel">
       <div class="frame active">
-        <img src="stickfigure.png" alt="Staff 1" class="portrait" />
-        <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        <div class="portrait-wrapper">
+          <img src="stickfigure.png" alt="Staff 1" class="portrait" />
+          <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        </div>
         <div class="info">
           <h2>Alex Johnson</h2>
           <p>Lead Archivist. Known for rare artifact knowledge and spooky anecdotes.</p>
         </div>
       </div>
       <div class="frame">
-        <img src="stickfigure.png" alt="Staff 2" class="portrait" />
-        <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        <div class="portrait-wrapper">
+          <img src="stickfigure.png" alt="Staff 2" class="portrait" />
+          <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        </div>
         <div class="info">
           <h2>Maya Lin</h2>
           <p>Curator of Lighting and Mood. Makes everything this dramatic.</p>
         </div>
       </div>
       <div class="frame">
-        <img src="stickfigure.png" alt="Staff 3" class="portrait" />
-        <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        <div class="portrait-wrapper">
+          <img src="stickfigure.png" alt="Staff 3" class="portrait" />
+          <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        </div>
         <div class="info">
           <h2>Marcus Shaw</h2>
           <p>Restoration Specialist. Keeps portraits pristine and timeless.</p>
         </div>
       </div>
       <div class="frame">
-        <img src="stickfigure.png" alt="Staff 4" class="portrait" />
-        <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        <div class="portrait-wrapper">
+          <img src="stickfigure.png" alt="Staff 4" class="portrait" />
+          <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        </div>
         <div class="info">
           <h2>Elena Torres</h2>
           <p>Director of Guest Experience. Hospitality and mystery master.</p>
@@ -212,6 +206,7 @@
     <div class="wainscoting"></div>
     <div class="light"></div>
   </div>
+
   <script>
     const carousel = document.getElementById('carousel');
     const frames = document.querySelectorAll('.frame');
