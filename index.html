@@ -38,13 +38,13 @@
       position: relative;
     }
     .frame {
+      position: relative; /* added for overlay positioning */
       flex: 0 0 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       transition: transform 0.6s ease-in-out;
-      position: relative;
       text-align: center;
       width: 300px;
       height: 400px;
@@ -54,9 +54,16 @@
       width: 300px;
       height: 400px;
       object-fit: cover;
+      display: block;
       border: none;
       box-shadow: none;
-      display: block;
+      background-color: #111;
+      transition: transform 0.3s ease;
+    }
+    .frame.active img.portrait {
+      box-shadow: 0 0 100px rgba(255, 240, 180, 0.8);
+      transform: scale(1.05);
+      z-index: 2;
     }
     .frame img.frame-overlay {
       position: absolute;
@@ -66,13 +73,7 @@
       height: 400px;
       pointer-events: none;
       user-select: none;
-    }
-    .frame.active {
-      z-index: 2;
-    }
-    .frame.active img.portrait {
-      transform: scale(1.05);
-      transition: transform 0.3s ease;
+      z-index: 10;
     }
     .info {
       margin-top: 20px;
@@ -81,6 +82,7 @@
       background-color: rgba(20, 16, 12, 0.8);
       border: 2px solid #7b6239;
       border-radius: 10px;
+      color: #d5c4a1;
     }
     .info h2 {
       margin: 0;
@@ -91,7 +93,6 @@
       margin: 0.5em 0 0;
       font-size: 0.95em;
       line-height: 1.4;
-      color: #d5c4a1;
     }
     .light {
       position: absolute;
@@ -109,7 +110,7 @@
       color: #fff6dd;
       cursor: pointer;
       user-select: none;
-      z-index: 10;
+      z-index: 20;
       padding: 10px;
       background: rgba(0, 0, 0, 0.4);
       border-radius: 10px;
@@ -124,7 +125,12 @@
       right: 10px;
     }
     @media (max-width: 768px) {
-      .frame, .frame img.portrait, .frame img.frame-overlay {
+      .frame {
+        width: 240px;
+        height: 320px;
+      }
+      .frame img.portrait,
+      .frame img.frame-overlay {
         width: 240px;
         height: 320px;
       }
@@ -136,7 +142,12 @@
       }
     }
     @media (max-width: 480px) {
-      .frame, .frame img.portrait, .frame img.frame-overlay {
+      .frame {
+        width: 180px;
+        height: 260px;
+      }
+      .frame img.portrait,
+      .frame img.frame-overlay {
         width: 180px;
         height: 260px;
       }
