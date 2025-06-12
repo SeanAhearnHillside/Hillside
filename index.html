@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Portrait Hallway Carousel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
@@ -46,20 +46,33 @@
       transition: transform 0.6s ease-in-out;
       position: relative;
       text-align: center;
+      width: 300px;
+      height: 400px;
+      box-sizing: border-box;
     }
-    .frame img {
+    .frame img.portrait {
       width: 300px;
       height: 400px;
       object-fit: cover;
-      border: 12px solid gold;
-      box-shadow: 0 0 80px rgba(255, 220, 150, 0.3);
-      background-color: #111;
-      transition: transform 0.3s ease;
+      border: none;
+      box-shadow: none;
+      display: block;
     }
-    .frame.active img {
-      box-shadow: 0 0 100px rgba(255, 240, 180, 0.8);
-      transform: scale(1.05);
+    .frame img.frame-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: 400px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .frame.active {
       z-index: 2;
+    }
+    .frame.active img.portrait {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
     }
     .info {
       margin-top: 20px;
@@ -111,7 +124,7 @@
       right: 10px;
     }
     @media (max-width: 768px) {
-      .frame img {
+      .frame, .frame img.portrait, .frame img.frame-overlay {
         width: 240px;
         height: 320px;
       }
@@ -123,10 +136,12 @@
       }
     }
     @media (max-width: 480px) {
-      .frame img {
+      .frame, .frame img.portrait, .frame img.frame-overlay {
         width: 180px;
         height: 260px;
-        border: 8px solid gold;
+      }
+      .frame img.portrait {
+        border: none;
       }
       .info {
         padding: 8px;
@@ -150,20 +165,36 @@
     <div class="arrow left" onclick="moveLeft()">‹</div>
     <div class="carousel" id="carousel">
       <div class="frame active">
-        <img src="https://via.placeholder.com/300x400.png?text=Staff+1" alt="Staff 1">
-        <div class="info"><h2>Alex Johnson</h2><p>Lead Archivist. Known for rare artifact knowledge and spooky anecdotes.</p></div>
+        <img src="https://via.placeholder.com/300x400.png?text=Staff+1" alt="Staff 1" class="portrait" />
+        <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        <div class="info">
+          <h2>Alex Johnson</h2>
+          <p>Lead Archivist. Known for rare artifact knowledge and spooky anecdotes.</p>
+        </div>
       </div>
       <div class="frame">
-        <img src="https://via.placeholder.com/300x400.png?text=Staff+2" alt="Staff 2">
-        <div class="info"><h2>Maya Lin</h2><p>Curator of Lighting and Mood. Makes everything this dramatic.</p></div>
+        <img src="https://via.placeholder.com/300x400.png?text=Staff+2" alt="Staff 2" class="portrait" />
+        <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        <div class="info">
+          <h2>Maya Lin</h2>
+          <p>Curator of Lighting and Mood. Makes everything this dramatic.</p>
+        </div>
       </div>
       <div class="frame">
-        <img src="https://via.placeholder.com/300x400.png?text=Staff+3" alt="Staff 3">
-        <div class="info"><h2>Marcus Shaw</h2><p>Restoration Specialist. Keeps portraits pristine and timeless.</p></div>
+        <img src="https://via.placeholder.com/300x400.png?text=Staff+3" alt="Staff 3" class="portrait" />
+        <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        <div class="info">
+          <h2>Marcus Shaw</h2>
+          <p>Restoration Specialist. Keeps portraits pristine and timeless.</p>
+        </div>
       </div>
       <div class="frame">
-        <img src="https://via.placeholder.com/300x400.png?text=Staff+4" alt="Staff 4">
-        <div class="info"><h2>Elena Torres</h2><p>Director of Guest Experience. Hospitality and mystery master.</p></div>
+        <img src="https://via.placeholder.com/300x400.png?text=Staff+4" alt="Staff 4" class="portrait" />
+        <img src="gold_frame.png" alt="Gold Frame" class="frame-overlay" />
+        <div class="info">
+          <h2>Elena Torres</h2>
+          <p>Director of Guest Experience. Hospitality and mystery master.</p>
+        </div>
       </div>
     </div>
     <div class="arrow right" onclick="moveRight()">›</div>
